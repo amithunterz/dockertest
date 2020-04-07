@@ -12,7 +12,7 @@ pipeline
 	stages
 	{		
 		
-		stage('Building image') 
+		stage('docker build') 
 		{
 			steps
 			{
@@ -24,7 +24,7 @@ pipeline
 		}
 
 		
-		stage('Deploy Image') 
+		stage('docker push') 
 		{
 			steps
 			{
@@ -38,7 +38,7 @@ pipeline
 			}
 		}
 		
-		stage('Remove Unused docker image') 
+		stage('docker remove image') 
 		{
 			steps
 			{
