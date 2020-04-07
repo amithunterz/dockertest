@@ -14,7 +14,7 @@ pipeline
 		{
 			steps
 			{
-				withDockerRegistry(credentialsId: 'docker-hub', toolName: 'Docker_19_03_8', url: 'https://registry.hub.docker.com'){
+				withDockerRegistry(credentialsId: 'docker-hub', url: 'https://registry.hub.docker.com'){
 				
 				push("${env.BUILD_NUMBER}")
 				push("latest")
