@@ -6,7 +6,7 @@ pipeline
 		stage('docker build')
 		{
 			steps{
-			docker.build("asramitsinghrawat/dockerdemo")
+			bat 'docker build -t asramitsinghrawat/dockerdemo .'
 			}
 		}
 
@@ -14,9 +14,12 @@ pipeline
 		{
 			steps
 			{
-				docker.withRegistry('https://registry.hub.docker.com','docker-hub')
+				withDockerRegistry(credentialsId: 'docker-hub', toolName: 'Docker_19_03_8', url: 'https://registry.hub.docker.com'){
+				
 				push("${env.BUILD_NUMBER}")
 				push("latest")
+				
+				}
 			}
 		}
 	}
