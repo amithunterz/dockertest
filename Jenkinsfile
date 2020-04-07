@@ -12,6 +12,7 @@ pipeline
 		{
 			steps{
 			bat 'docker build -t asramitsinghrawat/dockerdemo .'
+			bat 'docker logout'
 			}
 		}
 
