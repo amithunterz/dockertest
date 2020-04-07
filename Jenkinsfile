@@ -16,8 +16,7 @@ pipeline
 			{
 				withDockerRegistry(credentialsId: 'docker-hub', url: 'https://registry.hub.docker.com'){
 				
-				push("${env.BUILD_NUMBER}")
-				push("latest")
+				bat 'docker push asramitsinghrawat/dockerdemo'
 				
 				}
 			}
