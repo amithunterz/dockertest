@@ -1,5 +1,9 @@
 pipeline
 {
+	environment {
+ registry = 'asramitsinghrawat/dockerdemo'
+ registryCredential = 'docker-hub'
+}
 	agent any	
 	stages
 	{
@@ -14,7 +18,7 @@ pipeline
 		{
 			steps
 			{
-				withDockerRegistry(credentialsId: 'docker-hub', url: 'https://registry.hub.docker.com'){
+				withDockerRegistry(registryCredential, url: 'https://registry.hub.docker.com'){
 				
 				bat 'docker push asramitsinghrawat/dockerdemo'
 				
