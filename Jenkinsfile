@@ -1,20 +1,49 @@
 pipeline
 {
-	environment {
- registry = 'asramitsinghrawat/dockerdemo'
- registryCredential = 'docker-hub'
- 
-}
+	environment 
+	{
+		registry = 'asramitsinghrawat/dockerdemo'
+		registryCredential = 'docker-hub'
+		dockerImage = ''
+	}
+	
 	agent any	
 	stages
-	{
-		stage('docker build')
+	{		
+		
+		stage('Building image') 
 		{
 			steps{
-			bat 'docker build -t asramitsinghrawat/dockerdemo .'
-			bat 'docker logout'
+				script {
+					dockerImage = docker.build registry + ":$BUILD_NUMBER"
+				}
 			}
 		}
+
+		
+		stage('Deploy Image') 
+		{
+			steps{
+				script {
+					docker.withRegistry( '', registryCredential ) {
+						dockerImage.push()
+						}
+				}
+			}
+		}
+		
+		stage('Remove Unused docker image') 
+		{
+			steps{
+				bat "docker rmi $registry:$BUILD_NUMBER"
+			}
+		}
+	}
+}
+		
+		
+		
+		
 
 		stage('docker push')
 		{
