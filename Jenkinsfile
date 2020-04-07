@@ -20,9 +20,7 @@ pipeline
 			steps
 			{
 				withDockerRegistry(credentialsId: registryCredential, url: 'https://registry.hub.docker.com'){
-				
-				Image.push(asramitsinghrawat/dockerdemo)
-				
+				Image.push("asramitsinghrawat/dockerdemo")
 				}
 			}
 		}
