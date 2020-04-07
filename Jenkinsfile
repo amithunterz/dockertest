@@ -7,14 +7,17 @@ pipeline
 		dockerImage = ''
 	}
 	
-	agent any	
+	agent any
+	
 	stages
 	{		
 		
 		stage('Building image') 
 		{
-			steps{
-				script {
+			steps
+			{
+				script 
+				{
 					dockerImage = docker.build registry + ":$BUILD_NUMBER"
 				}
 			}
@@ -23,38 +26,25 @@ pipeline
 		
 		stage('Deploy Image') 
 		{
-			steps{
-				script {
-					docker.withRegistry( '', registryCredential ) {
+			steps
+			{
+				script 
+				{
+					docker.withRegistry( '', registryCredential ) 
+					{
 						dockerImage.push()
-						}
+					}
 				}
 			}
 		}
 		
 		stage('Remove Unused docker image') 
 		{
-			steps{
-				bat "docker rmi $registry:$BUILD_NUMBER"
-			}
-		}
-	}
-}
-		
-		
-		
-		
-
-		stage('docker push')
-		{
 			steps
 			{
-				withDockerRegistry(credentialsId: registryCredential, url: 'https://registry.hub.docker.com'){
-				
-				bat 'docker push asramitsinghrawat/dockerdemo'
-				
-				}
+				bat "docker rmi $registry:$BUILD_NUMBER"
 			}
-		}
+		}		
+		
 	}
 }
