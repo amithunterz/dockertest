@@ -30,31 +30,33 @@ pipeline
 			}
 		}
 		
-		stage('docker remove image') 
-		{
-			steps
-			{
-				bat "docker rmi asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
-			}
-		}
-		
-		stage('docker pull') 
-		{
-			steps
-			{
-				
-				bat "docker pull asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
-					
-			}
-		}
-		
 		stage('docker run') 
 		{
 			steps
 			{
 				
 				bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
-					
+				
+				timeout(time:60, unit:'SECONDS') 
+				{
+					input message:'STOPPING CONTAINER IN 100seconds'
+				}
+			}
+		}
+		
+		stage('docker stop') 
+		{
+			steps
+			{
+				bat "docker stop dockerdemo"
+			}
+		}
+		
+		stage('docker remove image') 
+		{
+			steps
+			{
+				bat "docker rmi asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
 			}
 		}
 
