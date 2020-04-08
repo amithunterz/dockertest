@@ -15,11 +15,8 @@ pipeline
 		stage('docker build') 
 		{
 			steps
-			{
-				script 
-				{
-					dockerImage = docker.build registry + ":$BUILD_NUMBER"
-				}
+			{				
+				bat "docker build -t $registry:$BUILD_NUMBER ."			
 			}
 		}
 
@@ -32,8 +29,6 @@ pipeline
 				{
 					docker.withRegistry( '', registryCredential ) 
 					{
-						
-
 						bat "docker push $registry:$BUILD_NUMBER"
 					}
 				}
@@ -46,10 +41,7 @@ pipeline
 			{
 				bat "docker rmi $registry:$BUILD_NUMBER"
 			}
-		}
-		
-		
-		
+		}		
 	
 	}
 }
