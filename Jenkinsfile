@@ -32,7 +32,9 @@ pipeline
 				{
 					docker.withRegistry( '', registryCredential ) 
 					{
-						dockerImage.push()
+						
+						bat 'docker tag $registry:$BUILD_NUMBER $registry:$BUILD_NUMBER'
+						bat 'docker tag $registry:$BUILD_NUMBER $registry:$BUILD_NUMBER"'
 					}
 				}
 			}
@@ -45,6 +47,9 @@ pipeline
 				bat "docker rmi $registry:$BUILD_NUMBER"
 			}
 		}
+		
+		
+		
 	
 	}
 }
