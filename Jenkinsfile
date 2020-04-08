@@ -16,7 +16,7 @@ pipeline
 		{
 			steps
 			{				
-				bat "docker build -t $registry:$BUILD_NUMBER ."			
+				bat "docker build -t asramitsinghrawat/dockerdemo:$BUILD_NUMBER ."			
 			}
 		}
 
@@ -26,7 +26,7 @@ pipeline
 			steps
 			{
 				
-				bat "docker push $registry:$BUILD_NUMBER"
+				bat "docker push asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
 					
 			}
 		}
@@ -35,7 +35,7 @@ pipeline
 		{
 			steps
 			{
-				bat "docker rmi $registry:$BUILD_NUMBER"
+				bat "docker rmi asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
 			}
 		}		
 	
