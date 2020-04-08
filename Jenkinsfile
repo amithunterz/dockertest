@@ -35,12 +35,7 @@ pipeline
 			steps
 			{
 				
-				bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
-				
-				timeout(time:60, unit:'SECONDS') 
-				{
-					input message:'STOPPING CONTAINER IN 100seconds'
-				}
+				bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:$BUILD_NUMBER"						
 			}
 		}
 		
