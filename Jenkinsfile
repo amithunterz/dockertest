@@ -25,13 +25,9 @@ pipeline
 		{
 			steps
 			{
-				script 
-				{
-					docker.withRegistry( '', registryCredential ) 
-					{
-						bat "docker push $registry:$BUILD_NUMBER"
-					}
-				}
+				
+				bat "docker push $registry:$BUILD_NUMBER"
+					
 			}
 		}
 		
