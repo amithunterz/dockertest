@@ -38,16 +38,9 @@ pipeline
 				bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:$BUILD_NUMBER"						
 			}
 		}
-	}
-}
-
-input 'STOP CONTAINER?'
-
-pipeline
-{
-	agent any
-	stages
-	{		
+		
+		input 'stop container now ?'
+		
 		stage('docker stop') 
 		{
 			steps
