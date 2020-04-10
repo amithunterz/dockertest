@@ -19,16 +19,15 @@ pipeline
 						notify('started')
 						bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:51"	
 						notify('Paused')
-					}
-					input {
+						
+						input {
 						message "Proceed to stop the container and remove image"
 						ok "Yes, Stop it"
-					}
-					
-					steps
-					{
+						}
+						
 						bat "docker stop dockerdemo"
 						bat "docker rmi asramitsinghrawat/dockerdemo:51"
+						
 					}
 				}
 				
