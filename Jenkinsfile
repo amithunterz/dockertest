@@ -11,38 +11,15 @@ pipeline
 	
 	stages
 	{	
-				stage('docker build') 
+				
+				stage('docker run + stop') 
 				{
 					steps
 					{	
 						notify('started')
-						bat "dock build -t asramitsinghrawat/dockerdemo:$BUILD_NUMBER ."			
-					}
-				}
-				
-				stage('docker push') 
-				{
-					steps
-					{
-						
-						bat "docker push asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
-							
-					}
-				}
-				
-				stage('docker run') 
-				{
-					steps
-					{	
-						
-						bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:$BUILD_NUMBER"	
+						bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:51"	
 						notify('Paused')
 					}
-				}
-				
-				
-				stage('docker stop and remove image') 
-				{
 					input {
 						message "Proceed to stop the container and remove image"
 						ok "Yes, Stop it"
@@ -51,9 +28,10 @@ pipeline
 					steps
 					{
 						bat "docker stop dockerdemo"
-						bat "docker rmi asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
+						bat "docker rmi asramitsinghrawat/dockerdemo:51"
 					}
 				}
+				
 	}
 
 	post
