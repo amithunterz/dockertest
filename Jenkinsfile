@@ -19,14 +19,14 @@ pipeline
 					steps
 					{	
 						notify('started')
-						bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:27"						
+						bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:27"	
+						notify('Paused')
 					}
 				}
 				
 				
 				stage('docker stop and remove image') 
 				{
-					notify('Paused')
 					input {
 						message "Proceed to stop the container and remove image"
 						ok "Yes, Stop it"
