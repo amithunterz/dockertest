@@ -12,26 +12,31 @@ pipeline
 	stages
 	{	
 				
-				stage('docker run + stop') 
+				
+				stage('docker run') 
 				{
 					steps
 					{	
-						script{
-							notify('started')
-							bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:51"	
-							notify('Paused')
-						}
-						input {
-						message "Proceed to stop the container and remove image"
-						ok "Yes, Stop it"
-						}
-						script{
-							bat "docker stop dockerdemo"
-							bat "docker rmi asramitsinghrawat/dockerdemo:51"
-						}
+						
+						bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:51"	
 					}
 				}
 				
+				
+				stage('docker stop and remove image') 
+				{
+					input {
+						notify('Paused')
+						message "Proceed to stop the container and remove image"
+						ok "Yes, Stop it"
+					}
+					
+					steps
+					{
+						bat "docker stop dockerdemo"
+						bat "docker rmi asramitsinghrawat/dockerdemo:51"
+					}
+				}
 	}
 
 	post
