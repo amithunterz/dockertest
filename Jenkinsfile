@@ -12,30 +12,16 @@ pipeline
 	stages
 	{		
 		
-		stage('docker build') 
-		{
-			steps
-			{				
-				bat "docker build -t asramitsinghrawat/dockerdemo:$BUILD_NUMBER ."			
-			}
-		}
+		
 
 		
-		stage('docker push') 
-		{
-			steps
-			{
-				
-				bat "docker push asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
-					
-			}
-		}
+		
 		
 		stage('docker run') 
 		{
 			steps
 			{				
-				bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:$BUILD_NUMBER"						
+				bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:27"						
 			}
 		}
 		
@@ -63,7 +49,7 @@ pipeline
 		{
 			steps
 			{
-				bat "docker rmi asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
+				bat "docker rmi asramitsinghrawat/dockerdemo:27"
 			}
 		}		
 	
