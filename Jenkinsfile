@@ -1,5 +1,6 @@
 pipeline
 {
+
 	environment 
 	{
 		registry = 'asramitsinghrawat/dockerdemo'
@@ -33,12 +34,20 @@ pipeline
 		stage('docker run') 
 		{
 			steps
-			{
-				
+			{				
 				bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:$BUILD_NUMBER"						
 			}
 		}
-		
+	}
+}
+
+input 'STOP CONTAINER?'
+
+pipeline
+{
+	agent any
+	stages
+	{		
 		stage('docker stop') 
 		{
 			steps
@@ -53,9 +62,7 @@ pipeline
 			{
 				bat "docker rmi asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
 			}
-		}
-
-		
+		}		
 	
 	}
 }
