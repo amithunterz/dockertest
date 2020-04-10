@@ -60,6 +60,6 @@ def notify(status)
 	emailext(to: "amitsinghrawat@gmail.com",
 	subject: "${status}: Job '${env.JOB_NAME}[${env.BUILD_NUMBER}]'",
 	body:"""${status}: Job '${env.JOB_NAME}[${env.BUILD_NUMBER}]':
-Check Console Output at <a href='${env.BUILD_URL}'>${env.JOB_NAME}[${env.BUILD_NUMBER}]</a>"""
+Check Console Output at ${env.BUILD_URL}"""
 	)
 }
