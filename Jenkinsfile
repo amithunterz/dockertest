@@ -1,6 +1,5 @@
 pipeline
-{
-	
+{	
 
 	environment 
 	{
@@ -17,7 +16,7 @@ pipeline
 					steps
 					{	
 						notify('started')
-						bat "docker build -t asramitsinghrawat/dockerdemo:$BUILD_NUMBER ."			
+						bat "dock build -t asramitsinghrawat/dockerdemo:$BUILD_NUMBER ."			
 					}
 				}
 				
@@ -61,7 +60,7 @@ pipeline
 	{
 		success
 		{
-			notify('succeded')
+			notify('succeeded')
 		}
 		failure
 		{
