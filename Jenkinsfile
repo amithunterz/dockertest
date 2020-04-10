@@ -57,6 +57,9 @@ pipeline
 
 def notify(status)
 {
-emailext body: '''${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'
-Check console output at <a href=\'${env.BUILD_URL}\'>${env.JOB_NAME}[${env.BUILD_NUMBER}]</a>''', subject: '${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'', to: 'asr.amitsinghrawat@gmail.com'
+	emailext(to: "asr.amitsinghrawat@gmail.com",
+	subject: "${status}: Job '${env.JOB_NAME}[${env.BUILD_NUMBER}]'",
+	body:"""<p>${status}: Job '${env.JOB_NAME}[${env.BUILD_NUMBER}]':</p>
+	<p>Check Console Output at <a href='${env.BUILD_URL}'>${env.JOB_NAME}[${env.BUILD_NUMBER}]</a></p>"""
+	)
 }
