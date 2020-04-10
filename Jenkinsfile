@@ -6,15 +6,14 @@ pipeline
 	{
 		registry = 'asramitsinghrawat/dockerdemo'
 		registryCredential = 'docker-hub'
+		def notify(status)
+		{
+		emailext body: '''${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'
+Check console output at <a href=\'${env.BUILD_URL}\'>${env.JOB_NAME}[${env.BUILD_NUMBER}]</a>''', subject: '${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'', to: 'asr.amitsinghrawat@gmail.com'
+		}
 	}
 	
 	agent any
-	
-	def notify(status)
-	{
-		emailext body: '''${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'
-Check console output at <a href=\'${env.BUILD_URL}\'>${env.JOB_NAME}[${env.BUILD_NUMBER}]</a>''', subject: '${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'', to: 'asr.amitsinghrawat@gmail.com'
-	}
 	
 	try
 	{
