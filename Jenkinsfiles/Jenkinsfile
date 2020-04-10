@@ -39,8 +39,6 @@ pipeline
 			}
 		}
 		
-		input 'stop container now ?'
-		
 		stage('docker stop') 
 		{
 			steps
