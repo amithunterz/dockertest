@@ -11,41 +11,15 @@ pipeline
 	agent any
 	
 	stages
-		{	
-		
-			def notify(status)
-			{
-emailext body: '''${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'
-Check console output at <a href=\'${env.BUILD_URL}\'>${env.JOB_NAME}[${env.BUILD_NUMBER}]</a>''', subject: '${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'', to: 'asr.amitsinghrawat@gmail.com'
-			}
-
-			try {
+	{	
 			
-				stage('docker build') 
-				{
-					notify('started')
-					steps
-					{				
-						bat "docker build -t asramitsinghrawat/dockerdemo:$BUILD_NUMBER ."			
-					}
-				}
-
-				
-				stage('docker push') 
-				{
-					steps
-					{
-						
-						bat "docker push asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
-							
-					}
-				}
 				
 				stage('docker run') 
 				{
 					steps
-					{				
-						bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:$BUILD_NUMBER"						
+					{	
+						notify('started')
+						bat "docker run -d --rm -p 8087:8080 --name dockerdemo asramitsinghrawat/dockerdemo:27"						
 					}
 				}
 				
@@ -61,15 +35,28 @@ Check console output at <a href=\'${env.BUILD_URL}\'>${env.JOB_NAME}[${env.BUILD
 					steps
 					{
 						bat "docker stop dockerdemo"
-						bat "docker rmi asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
-						notify('succeded')
+						bat "docker rmi asramitsinghrawat/dockerdemo:27"
 					}
 				}
-			}catch(err){ 
-		notify('error ${err}')
-		CurrentBuild.result='Failure'			
-				
-		
+	}
+
+	post
+	{
+		success
+		{
+			notify('succeded')
+		}
+		failure
+		{
+			notify('error')
 		}
 	}
+
+
+}
+
+def notify(status)
+{
+emailext body: '''${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'
+Check console output at <a href=\'${env.BUILD_URL}\'>${env.JOB_NAME}[${env.BUILD_NUMBER}]</a>''', subject: '${STATUS} : Job \'${env.JOB_NAME}[${env.BUILD_NUMBER}]\'', to: 'asr.amitsinghrawat@gmail.com'
 }
