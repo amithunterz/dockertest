@@ -6,6 +6,7 @@ pipeline
 	{
 		registry = 'asramitsinghrawat/dockerdemo'
 		registryCredential = 'docker-hub'
+		dockerImage=''
 	}
 	
 	agent any
@@ -17,7 +18,7 @@ pipeline
 					steps
 					{	
 						notify('started')
-						bat "docker build -t asramitsinghrawat/dockerdemo:$BUILD_NUMBER ."			
+						dockerImage = docker.build registry + ":$BUILD_NUMBER"
 					}
 				}
 				
@@ -25,8 +26,16 @@ pipeline
 				{
 					steps
 					{
-						
-						bat "docker push asramitsinghrawat/dockerdemo:$BUILD_NUMBER"
+						steps
+						{
+							script
+							{
+								docker.withRegistry('', registryCredential)
+								{
+									dockerImage.push()
+								}
+							}
+						}
 							
 					}
 				}
