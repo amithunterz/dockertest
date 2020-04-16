@@ -18,7 +18,11 @@ pipeline
 					steps
 					{	
 						notify('started')
-						dockerImage = docker.build registry + ":$BUILD_NUMBER"
+						script
+						{
+							
+							dockerImage = docker.build registry + ":$BUILD_NUMBER"
+						}
 					}
 				}
 				
