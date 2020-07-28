@@ -12,7 +12,14 @@ pipeline
 	agent any
 	
 	stages
-	{	
+	{
+		stage('Sonar Analysis')
+		{
+			steps
+			{
+				bat 'mvn sonar:sonar'
+			}
+		}
 				stage('docker build') 
 				{
 					steps
